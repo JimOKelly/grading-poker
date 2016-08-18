@@ -22,10 +22,6 @@ var winningOrder = 'two three four five six seven eight nine ten jack queen king
   .split(' ')
   .reverse();
 
-var codes = {
-  '2C': { rank: 'two', suit: 'clubs'}
-};
-
 var suits = 'hearts clubs diamonds spades'.split(' ');
 var ranks = winningOrder;
 
@@ -35,14 +31,20 @@ var deck = ranks.flatMap(function(rank) {
   });
 });
 
-
-var convertToFull = function(shortCodes) {
-  // 8C TS KC 9H 4S
-  var codes = shortCodes.split(' ');
+var cardFromShortCode = function(code) {
+  var rank = Tables.rankfromRankCode[code[0]];
+  var suit = Tables.suitfromSuitCode[code[1]];
+  return new Card({rank: rank, suit: suit});
 };
 
-console.log(Tables.rankfromRankCode()['A']);
+var hands = "8C TS KC 9H 4S 7D 2S 5D 3S AC".split(' ');
+var p1 = [];
+var p2 = [];
 
-//deck.forEach(function(card) {
-//  console.log(card.toShortCode());
-//});
+for (var i=0; i< hands.length; i++) {
+  var p = (i<5) ? p1 : p2;
+  p.push(cardFromShortCode(hands[i]));
+}
+
+console.log(p1);
+console.log(p2);
